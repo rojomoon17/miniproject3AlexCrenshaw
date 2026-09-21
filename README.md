@@ -83,53 +83,20 @@ store instead.
 
 ## AI Usage
 
-This project was built with Claude Code. Roughly how it was used:
+This project was built with Claude Code.
 
-- I asked for a plan before any code was written. Claude asked me to
-  pick a data source, then proposed several question/source pairings
-  (Practice Hub movies/stocks/people, a data.gov broadband dataset, a
-  Kaggle Netflix dataset) with a suggested chart for each; I picked
-  the Practice Hub movies option.
-- Claude authenticated against the Practice Hub API (reusing the base
-  URL and bearer-token pattern from miniproject1's `client.py`) to
-  inspect the actual response schema before writing any code, since
-  the original plan assumed a `runtime` field that turned out not to
-  exist - the real fields are title, director, year, genre, and
-  rating. It also discovered the server caps `count` at 500 per
-  request through trial and error.
-- Claude wrote a plan file (question, data source, DataFrame/groupby
-  approach, chart layout, file list) and I approved it before any
-  code was written.
-- `movie_report.py`, the box-plot-and-decade-trend figure, and the
-  color choices were drafted by Claude Code, then run and checked by
-  me.
-- `requirements.txt` was generated with `pip freeze` in the project's
-  venv; Claude then removed a few Windows-only packages
-  (`python-certifi-win32` and its dependencies) that were only needed
-  locally to work around the antivirus certificate issue above, not
-  by the script itself.
-- After the first version shipped, I asked Claude to suggest ways to
-  make the chart more readable and visually appealing. It proposed a
-  ranked list (replace the single overlaid 6-line decade chart with
-  small multiples, lighten the box plot styling, add a mean reference
-  line, bump figure size/DPI, add a takeaway caption) and I asked for
-  all of them. I then asked for two more passes: abbreviating
-  "Documentary" to "Docu." so its box plot label stopped crowding its
-  neighbors, and showing decade labels on every small-multiple panel
-  (not just the bottom row) with a consistent shared y-scale across
-  all six. I reviewed each redraw before approving it, and held off on
-  committing/pushing until I'd seen the result.
-- I then asked for a dark charcoal background with contrasting text
-  and a warm color gradient fitting the movie theme, and to restore
-  "Documentary" to its full name now that the angled labels had room
-  for it. Claude picked a gold-to-rose palette held at equal
-  lightness/saturation so every genre reads with similar contrast
-  against the dark surface, and flagged the tradeoff itself: a
-  purely warm palette sits closer together in hue than the prior
-  cross-spectrum one, so it's a little less distinguishable for
-  colorblind viewers by color alone - mitigated by every genre
-  already being labeled directly (tick labels and panel titles)
-  rather than relying on a legend. I also asked for the overall-mean
-  reference line and its label in white after noticing they blended
-  into the dark background in the first pass.
-- This README was drafted by Claude Code and reviewed by me.
+- Drafted the implementation plan (question, data source, DataFrame/chart design, file list).
+- Queried the Practice Hub API to determine the `movies` schema and the 500-row request cap.
+- Wrote `movie_report.py`: data fetch, DataFrame/groupby logic, and the box-plot + small-multiples chart.
+- Generated `requirements.txt` via `pip freeze`, then removed Windows-only packages unrelated to the script.
+- Redesigned the chart in three passes: (1) small-multiples decade grid, lighter box plot styling, mean reference line, larger figure/DPI, takeaway caption; (2) per-panel decade labels with a shared y-scale, genre label abbreviation and its later reversal; (3) dark charcoal theme, warm gold-to-rose genre palette, white mean-reference line/label.
+- Wrote all git commits and this README.
+
+## What I Changed
+
+- Chose the data source and question from options Claude proposed.
+- Reviewed and approved the plan before any code was written.
+- Created the `miniproject3AlexCrenshaw` GitHub repo and set my local `PRACTICE_API_TOKEN`.
+- Directed every design revision by specific instruction (listed above under AI Usage) and reviewed each chart render before approving it.
+- Approved every commit and push individually; nothing was committed or pushed without my go-ahead.
+- I did not hand-edit any file directly - all code, chart, and text changes were made by Claude Code per my instructions.
