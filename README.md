@@ -67,14 +67,14 @@ pip install -r requirements.txt
 python movie_report.py
 ```
 
-This prints the fetched row count and mean rating per genre, then
+This prints the fetched row count and mean rating per genre, then 
 writes `charts/movie_ratings_by_genre.png` (created automatically if
 `charts/` doesn't already exist).
 
 ## Troubleshooting
 
-If `requests` fails with a `CERTIFICATE_VERIFY_FAILED` error, it's
-likely antivirus software (e.g. Avast) doing HTTPS scanning with a
+If `requests` fails with a `CERTIFICATE_VERIFY_FAILED` error, it could be
+antivirus software (e.g. Avast) doing HTTPS scanning with a
 root certificate that isn't in Python's bundled `certifi` trust store
 - same issue as in miniproject2. Add an exception for `python.exe` in
 your antivirus's HTTPS/SSL scanning settings, or install
@@ -92,7 +92,7 @@ This project was built with Claude Code.
 - Redesigned the chart in three passes: (1) small-multiples decade grid, lighter box plot styling, mean reference line, larger figure/DPI, takeaway caption; (2) per-panel decade labels with a shared y-scale, genre label abbreviation and its later reversal; (3) dark charcoal theme, warm gold-to-rose genre palette, white mean-reference line/label.
 - Wrote all git commits and this README.
 
-## What I Changed
+## What I Did
 
 - Chose the data source and question from options Claude proposed.
 - Reviewed and approved the plan before any code was written.
