@@ -15,13 +15,14 @@ rating trended up or down by decade since the 1970s?**
 - Loads the results into a Pandas `DataFrame` and derives a `decade`
   column from each movie's release year.
 - Prints the row count and mean rating per genre to the console.
-- Plots a two-panel Matplotlib figure:
+- Plots a Matplotlib figure:
   - **Left:** a box plot of the rating distribution for each genre
     (Action, Comedy, Documentary, Drama, Horror, Sci-Fi), so you can
     compare medians and spread at a glance.
-  - **Right:** a line chart of mean rating by decade, one line per
-    genre, to show whether any genre's quality has trended up or
-    down over time.
+  - **Right:** a 2x3 small-multiples grid, one mini line chart per
+    genre showing mean rating by decade, so each genre's trend can be
+    read on its own instead of six overlapping lines on one chart.
+  - Both panels share a reference line at the overall mean rating.
 - Saves the figure as a PNG in `charts/`. This folder is generated
   when the script runs and is **not** committed to the repo (see
   `.gitignore`).
@@ -107,4 +108,15 @@ This project was built with Claude Code. Roughly how it was used:
   (`python-certifi-win32` and its dependencies) that were only needed
   locally to work around the antivirus certificate issue above, not
   by the script itself.
+- After the first version shipped, I asked Claude to suggest ways to
+  make the chart more readable and visually appealing. It proposed a
+  ranked list (replace the single overlaid 6-line decade chart with
+  small multiples, lighten the box plot styling, add a mean reference
+  line, bump figure size/DPI, add a takeaway caption) and I asked for
+  all of them. I then asked for two more passes: abbreviating
+  "Documentary" to "Docu." so its box plot label stopped crowding its
+  neighbors, and showing decade labels on every small-multiple panel
+  (not just the bottom row) with a consistent shared y-scale across
+  all six. I reviewed each redraw before approving it, and held off on
+  committing/pushing until I'd seen the result.
 - This README was drafted by Claude Code and reviewed by me.
