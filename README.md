@@ -119,4 +119,17 @@ This project was built with Claude Code. Roughly how it was used:
   (not just the bottom row) with a consistent shared y-scale across
   all six. I reviewed each redraw before approving it, and held off on
   committing/pushing until I'd seen the result.
+- I then asked for a dark charcoal background with contrasting text
+  and a warm color gradient fitting the movie theme, and to restore
+  "Documentary" to its full name now that the angled labels had room
+  for it. Claude picked a gold-to-rose palette held at equal
+  lightness/saturation so every genre reads with similar contrast
+  against the dark surface, and flagged the tradeoff itself: a
+  purely warm palette sits closer together in hue than the prior
+  cross-spectrum one, so it's a little less distinguishable for
+  colorblind viewers by color alone - mitigated by every genre
+  already being labeled directly (tick labels and panel titles)
+  rather than relying on a legend. I also asked for the overall-mean
+  reference line and its label in white after noticing they blended
+  into the dark background in the first pass.
 - This README was drafted by Claude Code and reviewed by me.
