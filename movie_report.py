@@ -24,21 +24,26 @@ SAMPLE_SIZE = 500  # server max per request
 CHARTS_DIR = "charts"
 CHART_DPI = 170
 
-# Fixed genre -> color mapping (validated categorical palette, first six
-# slots) so a genre's color stays the same in both subplots.
+# Fixed genre -> color mapping so a genre's color stays the same in
+# both subplots. A warm gold -> rose gradient (fitting the movie
+# theme), held at equal lightness/saturation so every genre keeps
+# similar contrast against the dark background - only the hue sweeps.
 GENRE_COLORS = {
-    "Action": "#2a78d6",       # blue
-    "Comedy": "#eb6834",       # orange
-    "Documentary": "#1baf7a",  # aqua
-    "Drama": "#eda100",        # yellow
-    "Horror": "#e87ba4",       # magenta
-    "Sci-Fi": "#008300",       # green
+    "Action": "#e1ba47",       # gold
+    "Comedy": "#e19947",       # orange
+    "Documentary": "#e17847",  # vermilion
+    "Drama": "#e15647",        # red
+    "Horror": "#e14759",       # rose
+    "Sci-Fi": "#e1477a",       # wine-pink
 }
 
-CHART_SURFACE = "#fcfcfb"
-INK_PRIMARY = "#0b0b0b"
+# Dark theme: charcoal surface with light ink, per the movie-poster
+# aesthetic requested for this chart.
+CHART_SURFACE = "#1a1a19"
+INK_PRIMARY = "#ffffff"
 INK_MUTED = "#898781"
-GRIDLINE = "#e1e0d9"
+GRIDLINE = "#2c2c2a"
+SPINE = "#383835"
 
 
 def fetch_movies(sample_size=SAMPLE_SIZE):
@@ -111,12 +116,9 @@ def plot_ratings_by_genre(df):
     ax_box = fig.add_subplot(outer[:, 0])
     ax_box.set_facecolor(CHART_SURFACE)
     box_data = [df.loc[df["genre"] == g, "rating"] for g in genre_order]
-    genre_labels = {"Documentary": "Docu."}
     bp = ax_box.boxplot(
         box_data,
-        tick_labels=[
-            f"{genre_labels.get(g, g)} (n={genre_counts[g]})" for g in genre_order
-        ],
+        tick_labels=[f"{g} (n={genre_counts[g]})" for g in genre_order],
         patch_artist=True,
         medianprops={"color": INK_PRIMARY, "linewidth": 1.5},
         whiskerprops={"color": INK_MUTED},
@@ -129,14 +131,14 @@ def plot_ratings_by_genre(df):
         patch.set_edgecolor(INK_MUTED)
         patch.set_linewidth(1)
 
-    ax_box.axhline(overall_mean, color=INK_MUTED, linewidth=1, zorder=0)
+    ax_box.axhline(overall_mean, color=INK_PRIMARY, linewidth=1, zorder=0)
     ax_box.annotate(
         f"overall mean ({overall_mean:.2f})",
         xy=(0.01, overall_mean),
         xycoords=("axes fraction", "data"),
         xytext=(0, 4),
         textcoords="offset points",
-        color=INK_MUTED,
+        color=INK_PRIMARY,
         fontsize=8,
     )
 
@@ -149,7 +151,7 @@ def plot_ratings_by_genre(df):
     ax_box.grid(axis="y", color=GRIDLINE, zorder=-1)
     ax_box.set_axisbelow(True)
     for spine in ax_box.spines.values():
-        spine.set_color(GRIDLINE)
+        spine.set_color(SPINE)
 
     # --- Right: small multiples, one mean-rating-by-decade line per genre ---
     header_ax = fig.add_subplot(outer[0, 1])
@@ -163,7 +165,7 @@ def plot_ratings_by_genre(df):
     for i, genre in enumerate(genre_order):
         ax = fig.add_subplot(inner[i // 3, i % 3])
         ax.set_facecolor(CHART_SURFACE)
-        ax.axhline(overall_mean, color=INK_MUTED, linewidth=1, zorder=0)
+        ax.axhline(overall_mean, color=INK_PRIMARY, linewidth=1, zorder=0)
         ax.plot(
             decades,
             decade_means[genre],
@@ -179,7 +181,7 @@ def plot_ratings_by_genre(df):
         ax.grid(color=GRIDLINE, zorder=-1)
         ax.set_axisbelow(True)
         for spine in ax.spines.values():
-            spine.set_color(GRIDLINE)
+            spine.set_color(SPINE)
 
         # Every panel shares the same y-scale (1-10) and shows its own
         # decade (year) labels, so panels can be read and compared
